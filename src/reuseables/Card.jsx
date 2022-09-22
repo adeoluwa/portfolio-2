@@ -4,7 +4,9 @@ import styled from 'styled-components';
 
 import { NavLink } from 'react-router-dom';
 
-const Box = styled.div`
+import { motion } from 'framer-motion';
+
+const Box = styled(motion.li)`
   width: 16rem;
   height: 40vh;
   background-color: ${(props) => props.theme.text};
@@ -63,15 +65,28 @@ const Link = styled(NavLink)`
   font-size: calc(1em + 0.5vw);
 
   ${Box}:hover & {
-    background-color:  ${(props) => props.theme.text};
+    background-color: ${(props) => props.theme.text};
     color: ${(props) => props.theme.body};
   }
 `;
 
+const Item = {
+  hidden: {
+    scale: 0,
+  },
+  show: {
+    scale: 1,
+    transition: {
+      type: 'spring',
+      duration: 0.5,
+    },
+  },
+};
+
 const Card = (props) => {
   const { id, name, description, tags, demo } = props.data;
   return (
-    <Box key={id}>
+    <Box key={id} variants={Item}>
       <Title>{name}</Title>
       <Description>{description}</Description>
       <Tags>

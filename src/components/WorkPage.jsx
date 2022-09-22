@@ -4,6 +4,8 @@ import styled, { ThemeProvider } from 'styled-components';
 
 import { darkTheme } from './Theme';
 
+import { motion } from 'framer-motion';
+
 import LogoComponent from '../reuseables/LogoComponent';
 
 import SocialIcons from '../reuseables/SocialIcons';
@@ -27,7 +29,7 @@ const Box = styled.div`
   align-items: center;
 `;
 
-const Main = styled.ul`
+const Main = styled(motion.ul)`
   position: fixed;
   top: 12rem;
   left: calc(10rem + 15vw);
@@ -46,9 +48,22 @@ const Rotate = styled.span`
   z-index: 1;
 `;
 
+//* Framer-motion Configuration
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+
+    transition: {
+      staggerChildren: 0.5,
+      duration: 0.5,
+    },
+  },
+};
+
 const WorkPage = () => {
   const ref = useRef(null);
-  const yingyang = useRef(null)
+  const yingyang = useRef(null);
 
   useEffect(() => {
     let element = ref.current;
@@ -56,7 +71,8 @@ const WorkPage = () => {
     const rotate = () => {
       element.style.transform = `translateX(${-window?.pageYOffset}px)`;
 
-      yingyang.current.style.transform = `rotate(`+ -window?.pageYOffset + 'deg)'
+      yingyang.current.style.transform =
+        `rotate(` + -window?.pageYOffset + 'deg)';
     };
 
     window.addEventListener('scroll', rotate);
@@ -72,7 +88,7 @@ const WorkPage = () => {
           <SocialIcons theme="dark" />
           <PowerButton />
 
-          <Main ref={ref}>
+          <Main ref={ref} variants={container} initial="hidden" animate="show">
             {Work.map((d) => (
               <Card key={d.id} data={d} />
             ))}
@@ -81,7 +97,7 @@ const WorkPage = () => {
             <YinYang width={80} height={80} fill={darkTheme?.text} />
           </Rotate>
 
-          <BigTitle text='WORK' top='10%' right='20%' />
+          <BigTitle text="WORK" top="10%" right="20%" />
         </Box>
       </ThemeProvider>
     </>

@@ -14,18 +14,18 @@ import { Blogs } from '../data/BlogData';
 
 import BlogComponent from './BlogComponent';
 
-// import AnchorComponent from '../reuseables/Anchor'
+import { motion } from 'framer-motion';
 
-// import BigTitle from '../reuseables/BigTitle';
+// import AnchorComponents from '../reuseables/Anchor';
 
+import BigTitle from '../reuseables/BigTitle';
 
-const MainContainer = styled.div`
+const MainContainer = styled(motion.div)`
   background-image: url(${img});
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  
 `;
 const Container = styled.div`
   background-color: ${(props) => `rgba(${props.theme.bodyRgba}, 0.8)`};
@@ -33,13 +33,14 @@ const Container = styled.div`
   height: auto;
   position: relative;
   padding-bottom: 5rem;
-  padding-top: 10rem;
+  
 `;
 
 const Center = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 10rem;
 `;
 
 const Grid = styled.div`
@@ -48,14 +49,36 @@ const Grid = styled.div`
   grid-gap: calc(1rem + 2vw);
 `;
 
+//* Framer-motion config
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+
+    transition: {
+      staggerChildren: 0.5,
+      duration: 0.5,
+    },
+  },
+};
+
 const BlogPage = () => {
   return (
     <>
-      <MainContainer>
+      <MainContainer
+        variants={container}
+        initial="hidden"
+        animate="show"
+        exit={{
+          opacity: 0,
+          transition: { duration: 0.5 },
+        }}
+      >
         <Container>
           <LogoComponent />
           <PowerButton />
           <SocialIcons />
+          {/* <AnchorComponents numbers={numbers} /> */}
           <Center>
             <Grid>
               {Blogs.map((blog) => {
@@ -63,6 +86,7 @@ const BlogPage = () => {
               })}
             </Grid>
           </Center>
+          <BigTitle text="Blog" top="5rem" left="5rem" />
         </Container>
       </MainContainer>
     </>

@@ -14,6 +14,8 @@ import PowerButton from '../reuseables/PowerButton';
 
 import ParticlesComponents from '../reuseables/ParticlesComponents';
 
+import BigTitle from '../reuseables/BigTitle';
+
 const Box = styled.div`
   background-color: ${(props) => props.theme.body};
   width: 100vw;
@@ -130,6 +132,7 @@ const Stacks = () => {
               </ul>
             </Description>
           </Main>
+          <BigTitle text="Skills" top='83%' left='30%' />
         </Box>
       </ThemeProvider>
     </>

@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import { Github, Twitter } from '../components/AllSvgs';
 
+import { motion } from 'framer-motion';
+
 import { darkTheme } from '../components/Theme';
 
 const Icons = styled.div`
@@ -23,7 +25,7 @@ const Icons = styled.div`
     margin: 0.5rem 0;
   }
 `;
-const Line = styled.span`
+const Line = styled(motion.span)`
   width: 2px;
   height: 8rem;
   background-color: ${(props) =>
@@ -33,7 +35,11 @@ const Line = styled.span`
 const SocialIcons = (props) => {
   return (
     <Icons>
-      <div>
+      <motion.div
+        initial={{ transform: 'scale(0)' }}
+        animate={{ scale: [0, 1, 1.5, 1] }}
+        transition={{ type: 'spring', duration: 1, delay: 1.2 }}
+      >
         <NavLink
           style={{ color: 'inherit' }}
           target="_blank"
@@ -45,18 +51,39 @@ const SocialIcons = (props) => {
             fill={props?.theme === 'dark' ? darkTheme.text : darkTheme.body}
           />
         </NavLink>
-      </div>
-      <div>
-        <NavLink style={{ color: 'inherit' }} target="_blank" to="/">
+      </motion.div>
+      <motion.div
+        initial={{ transform: 'scale(0)' }}
+        animate={{ scale: [0, 1, 1.5, 1] }}
+        transition={{ type: 'spring', duration: 1, delay: 1.4 }}
+      >
+        <NavLink
+          style={{ color: 'inherit' }}
+          target="_blank"
+          to={{ pathname: 'https://twitter.com/deeollu' }}
+        >
           <Twitter
             width={25}
             height={25}
             fill={props?.theme === 'dark' ? darkTheme.text : darkTheme.body}
           />
         </NavLink>
-      </div>
+      </motion.div>
 
-      <Line color={props?.theme} />
+      <Line
+        color={props?.theme}
+        initial={{
+          height: 0,
+        }}
+        animate={{
+          height: '8rem',
+        }}
+        transition={{
+          type: 'spring',
+          duration: 1,
+          delay: 0.8,
+        }}
+      />
     </Icons>
   );
 };
